@@ -11,7 +11,9 @@ services:
       POSTGRES_PASSWORD: mypassword  # ✅ Change this if needed
     ports:
       - "5433:5432"  # ✅ Maps container's 5432 to host 5433 (to avoid conflicts)
-    
+    volumes:
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
   backend:
     build: ./backend
     container_name: vacation_backend
