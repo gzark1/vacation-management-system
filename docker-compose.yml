@@ -7,12 +7,13 @@ services:
     restart: always
     environment:
       POSTGRES_DB: vacation_portal
-      POSTGRES_USER: myuser  # ✅ Change this if needed
-      POSTGRES_PASSWORD: mypassword  # ✅ Change this if needed
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
     ports:
-      - "5433:5432"  # ✅ Maps container's 5432 to host 5433 (to avoid conflicts)
+      - "5433:5432"
     volumes:
-      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./backend/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
 
   backend:
     build: ./backend
