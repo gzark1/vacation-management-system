@@ -1,6 +1,6 @@
 FROM python:3.10.12
 
-WORKDIR /app
+WORKDIR /server
 
 # Copy only necessary files first
 COPY requirements.txt ./
@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the command to run the backend
-CMD ["python", "app.py"]
+CMD ["python", "server.py"]

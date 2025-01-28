@@ -2,3 +2,4 @@ psycopg2
 bcrypt
 werkzeug
 python-dotenv
+pyjwt
