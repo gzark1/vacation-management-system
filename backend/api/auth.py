@@ -48,4 +48,4 @@ class AuthService:
         # Generate JWT
         token = AuthService.generate_jwt(user[0], user[2])
 
-        return {"message": "Login successful", "token": token}, 200
+        return {"message": "Login successful", "token": token, "role": user[2]}, 200  # Return token and role

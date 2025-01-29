@@ -7,10 +7,12 @@ import json
 
 class App:
     """Main Application Class for handling routing and requests."""
-
     def __call__(self, environ, start_response):
         request = Request(environ)
         urls = url_map.bind_to_environ(environ)
+
+        if request.method == "OPTIONS":
+            return self.options(request)(environ, start_response)
 
         try:
             endpoint, args = urls.match()
@@ -19,6 +21,11 @@ class App:
         except Exception as e:
             response = Response(json.dumps({"error": str(e)}), status=500, mimetype="application/json")
 
+        # Add CORS headers to every response
+        response.headers["Access-Control-Allow-Origin"] = "*"  # Allow all origins
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+
         return response(environ, start_response)
 
     def login(self, request):
@@ -26,11 +33,11 @@ class App:
         data = request.get_json()
         from api.auth import AuthService
         response, status_code = AuthService.login(data.get("email"), data.get("password"))
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+        return self.create_response(response, status_code)
 
     def logout(self, request):
         """Handles user logout."""
-        return Response(json.dumps({"message": "Logged out successfully"}), status=200, mimetype="application/json")
+        return self.create_response({"message": "Logged out successfully"}, 200)
 
     @AuthMiddleware.require_auth("manager")
     def create_user(self, request, user):
@@ -38,14 +45,14 @@ class App:
         data = request.get_json()
         from api.users import UserService
         response, status_code = UserService.create_user(data, user["user_id"])
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+        return self.create_response(response, status_code)
 
     @AuthMiddleware.require_auth("manager")
     def get_users(self, request, user):
         """Get all users (Manager only)."""
         from api.users import UserService
         response, status_code = UserService.get_users()
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+        return self.create_response(response, status_code)
 
     @AuthMiddleware.require_auth("manager")
     def update_user(self, request, user, user_id):
@@ -53,24 +60,30 @@ class App:
         data = request.get_json()
         from api.users import UserService
         response, status_code = UserService.update_user(user_id, data)
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+        return self.create_response(response, status_code)
 
     @AuthMiddleware.require_auth("manager")
     def delete_user(self, request, user, user_id):
         """Delete a user (Manager only)."""
         from api.users import UserService
         response, status_code = UserService.delete_user(user_id, user["user_id"])
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
-    
-"""
-    @AuthMiddleware.require_auth()
-    def get_me(self, request, user):
-        Get currently authenticated user.
-        from api.users import UserService
-        response, status_code = UserService.get_me(user["user_id"])
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
-"""
-    
+        return self.create_response(response, status_code)
+
+    def options(self, request):
+        """Handles CORS preflight requests for all endpoints."""
+        response = Response()
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.status_code = 200  # Explicitly return HTTP 200 for preflight
+        return response
+
+    def create_response(self, data, status_code):
+        return Response(
+            json.dumps(data),
+            status=status_code,
+            mimetype="application/json"
+        )
 
 if __name__ == "__main__":
     app = App()

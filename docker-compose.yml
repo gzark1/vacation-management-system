@@ -35,3 +35,12 @@ services:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
     env_file:
       - backend/.env
+
+  frontend:
+    build: ./frontend
+    container_name: vacation_frontend
+    restart: always
+    ports:
+      - "3000:80"  # Serve the frontend on port 3000
+    volumes:
+      - ./frontend:/usr/share/nginx/html  # Live reload
