@@ -15,7 +15,7 @@ class App:
         try:
             endpoint, args = urls.match()
             handler = getattr(self, endpoint)
-            response = handler(request)
+            response = handler(request, **args)
         except Exception as e:
             response = Response(json.dumps({"error": str(e)}), status=500, mimetype="application/json")
 
@@ -42,6 +42,31 @@ class App:
         from api.users import UserService
         response, status_code = UserService.get_users()
         return Response(json.dumps(response), status=status_code, mimetype="application/json")
+
+    @AuthMiddleware.require_auth("manager")
+    def update_user(self, request, user, user_id):
+        """Update a user (Manager only)."""
+        data = request.get_json()
+        from api.users import UserService
+        response, status_code = UserService.update_user(user_id, data)
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+
+    @AuthMiddleware.require_auth("manager")
+    def delete_user(self, request, user, user_id):
+        """Delete a user (Manager only)."""
+        from api.users import UserService
+        response, status_code = UserService.delete_user(user_id, user["user_id"])
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+    
+"""
+    @AuthMiddleware.require_auth()
+    def get_me(self, request, user):
+        Get currently authenticated user.
+        from api.users import UserService
+        response, status_code = UserService.get_me(user["user_id"])
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+"""
+    
 
 if __name__ == "__main__":
     app = App()
