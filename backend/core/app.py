@@ -28,6 +28,10 @@ class App:
         response, status_code = AuthService.login(data.get("email"), data.get("password"))
         return Response(json.dumps(response), status=status_code, mimetype="application/json")
 
+    def logout(self, request):
+        """Handles user logout."""
+        return Response(json.dumps({"message": "Logged out successfully"}), status=200, mimetype="application/json")
+
     @AuthMiddleware.require_auth("manager")
     def create_user(self, request, user):
         """Create a new user (Manager only)."""
