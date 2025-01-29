@@ -1,13 +1,16 @@
 FROM python:3.10.12
 
-WORKDIR /server
+WORKDIR /app
 
-# Copy only necessary files first
+# Set PYTHONPATH to allow absolute imports
+ENV PYTHONPATH=/app
+
+# Install dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy everything else (avoiding unnecessary files using .dockerignore)
+# Copy application files
 COPY . .
 
-# Set the command to run the backend
-CMD ["python", "server.py"]
+# Run tests, but ensure the server starts even if tests fail
+CMD (python -m unittest discover -s tests; python core/app.py)
