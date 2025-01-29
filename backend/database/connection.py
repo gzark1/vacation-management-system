@@ -1,12 +1,20 @@
 import psycopg2
+import os
 
-# Database connection string (keeping DB_NAME, HOST, and PORT fixed)
-DATABASE_URL = f"postgresql://myuser:mypassword@db:5432/vacation_portal"
+# Load environment variables
+DB_NAME = os.getenv("DB_NAME", "vacation_portal")
+DB_USER = os.getenv("DB_USER", "myuser")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "mypassword")
+DB_HOST = os.getenv("DB_HOST", "db")
+DB_PORT = os.getenv("DB_PORT", "5432")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 def connect_db():
+    """ Connects to the database using environment variables. """
     try:
         conn = psycopg2.connect(DATABASE_URL)
         return conn
     except Exception as e:
-        print("Database connection failed:", e)
+        print(f"Database connection failed: {e}")
         return None
