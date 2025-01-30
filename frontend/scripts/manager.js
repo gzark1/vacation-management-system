@@ -43,8 +43,12 @@ document.getElementById("users-table").addEventListener("click", function (event
     
     if (event.target.classList.contains("edit-btn")) {
         const userId = event.target.dataset.userId;
-        editUser(userId);  // Edit functionality (to be implemented)
+        window.location.href = `/public/user_form.html?id=${userId}`;
     }
+});
+
+document.getElementById("create-user").addEventListener("click", () => {
+    window.location.href = "/public/user_form.html"; // Redirect to the user form for creating a new user
 });
 
 // Load users when the page loads
