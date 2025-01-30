@@ -7,5 +7,6 @@ url_map = Map([
     Rule('/users', methods=['GET'], endpoint='get_users'),
     Rule('/users/<int:user_id>', methods=['PUT'], endpoint='update_user'),  # ✅ Update user
     Rule('/users/<int:user_id>', methods=['DELETE'], endpoint='delete_user'),  # ✅ Delete user
+    Rule('/users/<int:user_id>', methods=['GET'], endpoint='get_user_by_id'),  # ✅ Get user
     #Rule('/me', methods=['GET'], endpoint='get_me'),  # ✅ Get logged-in user
 ])

@@ -3,6 +3,7 @@ from werkzeug.routing import Map
 from werkzeug.serving import run_simple
 from api.routes import url_map
 from api.middleware import AuthMiddleware
+import traceback
 import json
 
 class App:
@@ -10,7 +11,7 @@ class App:
     def __call__(self, environ, start_response):
         request = Request(environ)
         urls = url_map.bind_to_environ(environ)
-
+        b2[0] = 1
         if request.method == "OPTIONS":
             return self.options(request)(environ, start_response)
 
@@ -19,6 +20,10 @@ class App:
             handler = getattr(self, endpoint)
             response = handler(request, **args)
         except Exception as e:
+            # Capture and print full error traceback
+            error_message = traceback.format_exc()
+            print(f"🔥 Backend Error:\n{error_message}")  # Logs full stack trace
+
             response = Response(json.dumps({"error": str(e)}), status=500, mimetype="application/json")
 
         # Add CORS headers to every response
@@ -68,6 +73,13 @@ class App:
         from api.users import UserService
         response, status_code = UserService.delete_user(user_id, user["user_id"])
         return self.create_response(response, status_code)
+    
+    @AuthMiddleware.require_auth("manager")
+    def get_user_by_id(self, request, user, user_id):
+        """Retrieve a single user's details (Manager only)."""
+        from api.users import UserService
+        response, status_code = UserService.get_user_by_id(user_id)
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
 
     def options(self, request):
         """Handles CORS preflight requests for all endpoints."""

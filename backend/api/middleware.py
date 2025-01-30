@@ -19,12 +19,12 @@ class AuthMiddleware:
             def wrapper(instance, request, *args, **kwargs):
                 token = request.headers.get("Authorization")
                 if not token or not token.startswith("Bearer "):
-                    return Response(json.dumps({"error": "Unauthorized"}), status=401, mimetype="application/json")
+                    return Response(json.dumps({"error": "No token or token doesn't start with Bearer"}), status=401, mimetype="application/json")
 
                 try:
                     decoded = jwt.decode(token.split("Bearer ")[1], SECRET_KEY, algorithms=["HS256"])
                     if decoded["role"] != required_role:
-                        return Response(json.dumps({"error": "Forbidden"}), status=403, mimetype="application/json")
+                        return Response(json.dumps({"error": "Forbidden for your role."}), status=403, mimetype="application/json")
                     return func(instance, request, decoded, *args, **kwargs)
                 except jwt.ExpiredSignatureError:
                     return Response(json.dumps({"error": "Token expired"}), status=401, mimetype="application/json")

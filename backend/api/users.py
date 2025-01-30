@@ -7,6 +7,8 @@ class UserService:
     @staticmethod
     def create_user(data, created_by):
         """ Creates a new user (Manager only). """
+        print("We got the data for new user in database")
+        print(data)
         conn = connect_db()
         cursor = conn.cursor()
 
@@ -30,6 +32,19 @@ class UserService:
         cursor.execute("SELECT id, name, email, role FROM users")
         users = [{"id": row[0], "name": row[1], "email": row[2], "role": row[3]} for row in cursor.fetchall()]
         return users, 200
+
+    @staticmethod
+    def get_user_by_id(user_id):
+        """ Retrieves details of a single user. """
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, email FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user:
+            return {"error": "User not found"}, 404
+
+        return {"id": user[0], "name": user[1], "email": user[2]}, 200
 
     @staticmethod
     def update_user(user_id, data):
