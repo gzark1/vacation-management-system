@@ -1,27 +1,51 @@
-async function fetchUsers() {
-    const token = localStorage.getItem("token");
-    
-    if (!token) {
-        window.location.href = "/public/index.html";  // Redirect to login if no token
-        return;
-    }
+import { apiRequest } from "./api.js";
 
-    const response = await fetch("http://localhost:8080/users", {
-        headers: { "Authorization": `Bearer ${token}` }
+async function loadUsers() {
+    const users = await apiRequest("/users");
+
+    const usersTable = document.getElementById("users-table");
+    usersTable.innerHTML = ""; // Clear table before repopulating
+
+    users.forEach(user => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>
+                <button class="edit-btn" data-user-id="${user.id}">Edit</button>
+                <button class="delete-btn" data-user-id="${user.id}">Delete</button>
+            </td>
+        `;
+
+        usersTable.appendChild(row);
     });
+}
 
-    const users = await response.json();
+async function deleteUser(userId) {
+    if (!confirm("Are you sure you want to delete this user?")) return;
 
-    if (response.ok) {
-        const usersList = document.getElementById("users-list");
-        users.forEach(user => {
-            const li = document.createElement("li");
-            li.textContent = `${user.name} (${user.role})`;
-            usersList.appendChild(li);
-        });
+    const response = await apiRequest(`/users/${userId}`, "DELETE");
+
+    if (response.error) {
+        alert("Error deleting user: " + response.error);
     } else {
-        alert("Error fetching users");
+        alert("User deleted successfully!");
+        loadUsers();  // Refresh list after deletion
     }
 }
 
-fetchUsers();
+document.getElementById("users-table").addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-btn")) {
+        const userId = event.target.dataset.userId;
+        deleteUser(userId);
+    }
+    
+    if (event.target.classList.contains("edit-btn")) {
+        const userId = event.target.dataset.userId;
+        editUser(userId);  // Edit functionality (to be implemented)
+    }
+});
+
+// Load users when the page loads
+loadUsers();

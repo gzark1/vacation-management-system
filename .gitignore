@@ -1,3 +1,7 @@
 backend/.env
 notes.odt
 .~lock.notes.odt#
+#all pycaches
+backend/database/__pycache__/
+backend/tests/__pycache__/
+backend/api/__pycache__/
