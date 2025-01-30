@@ -11,7 +11,6 @@ class App:
     def __call__(self, environ, start_response):
         request = Request(environ)
         urls = url_map.bind_to_environ(environ)
-        b2[0] = 1
         if request.method == "OPTIONS":
             return self.options(request)(environ, start_response)
 
