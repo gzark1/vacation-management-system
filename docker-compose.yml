@@ -6,16 +6,17 @@ services:
     container_name: vacation_db
     restart: always
     env_file:
-      - backend/.env  # ✅ Loads variables from .env
+      - backend/.env  # Loads variables from .env
     environment:
       POSTGRES_DB: vacation_portal
       POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword  # ✅ Ensure this is set
+      POSTGRES_PASSWORD: mypassword  # Ensure this is set
     ports:
       - "5433:5432"
     volumes:
       - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - ./backend/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - db_data:/var/lib/postgresql/data  # Database persists across restarts
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U myuser -d vacation_portal"]
       interval: 5s
@@ -28,13 +29,15 @@ services:
     restart: always
     depends_on:
       db:
-        condition: service_healthy  # ✅ Ensures backend only starts when DB is ready
+        condition: service_healthy  # Ensures backend only starts when DB is ready
     ports:
       - "8080:8080"
     environment:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
     env_file:
       - backend/.env
+    volumes:
+      - ./backend:/app  
 
   frontend:
     build: ./frontend
@@ -44,3 +47,6 @@ services:
       - "3000:80"  # Serve the frontend on port 3000
     volumes:
       - ./frontend:/usr/share/nginx/html  # Live reload
+      
+volumes:
+  db_data:
