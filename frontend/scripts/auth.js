@@ -77,3 +77,17 @@ if (!window.location.pathname.endsWith("index.html")) {
     const role = scriptTag.getAttribute('role');
     checkAuth(role);
 }
+
+// Function to log out the user
+function logout() {
+    localStorage.removeItem("token"); // Remove token from storage
+    window.location.href = "/public/index.html"; // Redirect to login
+}
+
+// Attach logout event to button
+document.addEventListener("DOMContentLoaded", () => {
+    const logoutButton = document.getElementById("logout-button");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", logout);
+    }
+});
