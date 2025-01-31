@@ -2,7 +2,7 @@ import { apiRequest } from "./api.js";
 
 async function loadUsers() {
     const users = await apiRequest("/users");
-
+    
     const usersTable = document.getElementById("users-table");
     usersTable.innerHTML = ""; // Clear table before repopulating
 

@@ -10,13 +10,17 @@ const API_BASE_URL = "http://localhost:8080";
  * @returns {Promise<Object|null>} - The JSON response from the API or `null` if no content.
  */
 async function apiRequest(endpoint, method = "GET", body = null, customHeaders = {}) {
-    console.log("changes to API");
-
     const token = localStorage.getItem("token");
-    const headers = { "Content-Type": "application/json", ...customHeaders };
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+
+    // 🚨 Redirect to error page if there's NO token (except for index.html)
+    if (!token) {
+        console.warn("No token found. Redirecting to error page.");
+        window.location.href = "/public/error.html?msg=not_logged_in";
+        return null;
     }
+
+    const headers = { "Content-Type": "application/json", ...customHeaders };
+    headers["Authorization"] = `Bearer ${token}`;
 
     const options = { method, headers };
     if (body) {
@@ -24,15 +28,24 @@ async function apiRequest(endpoint, method = "GET", body = null, customHeaders =
     }
 
     try {
+        console.log(`API Request: ${method} ${endpoint}`);
         const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
 
         // Handle non-2xx responses explicitly
         if (!response.ok) {
             const errorResponse = await response.json();
+            console.error("API Error:", errorResponse);
+            
+            // 🚨 Handle unauthorized errors (invalid token, expired token)
+            if (response.status === 401 || response.status === 403) {
+                console.warn("Unauthorized access. Redirecting to error page.");
+                window.location.href = "/public/error.html?msg=unauthorized";
+                return null;
+            }
+
             throw new Error(errorResponse.error || `HTTP ${response.status}`);
         }
 
-        // Return JSON if response has content
         return response.status !== 204 ? await response.json() : null;
     } catch (error) {
         console.error(`API Request failed: ${error.message}`);

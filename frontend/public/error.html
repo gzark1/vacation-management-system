@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+</head>
+<body>
+    <h1>Error</h1>
+    <p id="error-message">An unknown error occurred.</p>
+    <button onclick="window.location.href='/public/index.html'">Go Back to Login</button>
+
+    <script>
+
+        // Get the value of a query parameter from the URL
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Map of error messages
+        const errorMessageMap = {
+            "not_logged_in": "You are not logged in. Please log in first.",
+            "unauthorized": `Access denied! Only ${getQueryParam("required")}s can access this page. You are a ${getQueryParam("role")}.`,
+            "invalid_token": "Invalid or expired session. Please log in again."
+        };
+
+        // Set the error message paragraph text (<p id="error-message">) according to the URL msg query parameter
+        document.getElementById("error-message").innerText =
+            errorMessageMap[getQueryParam("msg")] || "An unknown error occurred.";
+    </script>
+</body>
+</html>
