@@ -5,6 +5,7 @@ from api.routes import url_map
 from api.middleware import AuthMiddleware
 import traceback
 import json
+from api.vacation_requests import VacationRequestService
 
 class App:
     """Main Application Class for handling routing and requests."""
@@ -78,6 +79,12 @@ class App:
         """Retrieve a single user's details (Manager only)."""
         from api.users import UserService
         response, status_code = UserService.get_user_by_id(user_id)
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+
+    @AuthMiddleware.require_auth()
+    def get_vacation_requests(self, request, user):
+        """Retrieve vacation requests. Managers see all, employees see their own."""
+        response, status_code = VacationRequestService.get_vacation_requests(user)
         return Response(json.dumps(response), status=status_code, mimetype="application/json")
 
     def options(self, request):

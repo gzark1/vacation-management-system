@@ -16,6 +16,7 @@ services:
     volumes:
       - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - ./backend/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      #- ./backend/database/seed.sql:d:ro
       - db_data:/var/lib/postgresql/data  # Database persists across restarts
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U myuser -d vacation_portal"]

@@ -12,7 +12,7 @@ class AuthMiddleware:
     """ Middleware to validate JWT tokens globally. """
 
     @staticmethod
-    def require_auth(required_role):
+    def require_auth(required_role=None):
         """ Decorator to require authentication for a route. """
         def decorator(func):
             @wraps(func)
@@ -23,7 +23,8 @@ class AuthMiddleware:
 
                 try:
                     decoded = jwt.decode(token.split("Bearer ")[1], SECRET_KEY, algorithms=["HS256"])
-                    if decoded["role"] != required_role:
+                    # If a required_role is provided, check it; otherwise, skip the check
+                    if required_role and decoded["role"] != required_role:
                         return Response(json.dumps({"error": "Forbidden for your role."}), status=403, mimetype="application/json")
                     return func(instance, request, decoded, *args, **kwargs)
                 except jwt.ExpiredSignatureError:
