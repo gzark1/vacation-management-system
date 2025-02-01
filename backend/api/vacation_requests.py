@@ -57,7 +57,40 @@ class VacationRequestService:
             conn.rollback()  # Ensure the transaction is rolled back on error
             return {"error": str(e)}, 400
 
+    @staticmethod
+    def review_vacation_request(request_id, reviewer_id, status):
+        """Approve or reject a vacation request and set who reviewed it."""
+        conn = connect_db()
+        cursor = conn.cursor()
 
+        try:
+            # Check if the vacation request exists
+            cursor.execute("SELECT id, status FROM vacation_requests WHERE id = %s", (request_id,))
+            request = cursor.fetchone()
+
+            if not request:
+                return {"error": "Vacation request not found"}, 404
+            
+            # Update the status and reviewed_by fields
+            cursor.execute(
+                "UPDATE vacation_requests SET status = %s, reviewed_by = %s WHERE id = %s RETURNING id, status, reviewed_by;",
+                (status, reviewer_id, request_id)
+            )
+            updated_request = cursor.fetchone()
+            conn.commit()
+
+            # Return success response with updated information
+            return {
+                "message": "Vacation request updated successfully",
+                "id": updated_request[0],
+                "status": updated_request[1],
+                "reviewed_by": updated_request[2]
+            }, 200
+
+        except Exception as e:
+            conn.rollback()  # Ensure the transaction is rolled back on error
+            return {"error": str(e)}, 400
+        
     @staticmethod
     def get_vacation_request_by_id(request_id):
         """ Retrieves details of a single vacation request. """

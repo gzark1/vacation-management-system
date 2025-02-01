@@ -105,6 +105,23 @@ class App:
         
         return self.create_response(response, status_code)
 
+    @AuthMiddleware.require_auth("manager")  # Only managers should be able to review vacation requests
+    def review_vacation_request(self, request, user, request_id):
+        """Approve or reject a vacation request."""
+        data = request.get_json()
+        
+        # Extract the status (approved/rejected) from the request body
+        status = data.get("status")
+        
+        if status not in ["approved", "rejected"]:
+            return self.create_response({"error": "Invalid status. Must be 'approved' or 'rejected'."}, 400)
+        
+        # Call the service to update the vacation request
+        from api.vacation_requests import VacationRequestService
+        response, status_code = VacationRequestService.review_vacation_request(request_id, user["user_id"], status)
+        
+        return self.create_response(response, status_code)
+
     def options(self, request):
         """Handles CORS preflight requests for all endpoints."""
         response = Response()
