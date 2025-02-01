@@ -12,7 +12,9 @@
     <div id="navbar-container"></div> 
     <h1>My Vacation Requests</h1>
 
-    <!-- Table to display employee's vacation requests -->
+    <!-- Add a button to create a new vacation request -->
+    <button id="create-vacation-request">Create Vacation Request</button>
+
     <table border="1">
         <thead>
             <tr>
@@ -21,11 +23,18 @@
                 <th>Reason</th>
                 <th>Status</th>
                 <th>Reviewed By</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="vacation-requests-table"></tbody>
     </table>
 
     <script type="module" src="/scripts/employee.js"></script>
+    <script type="module">
+        // Add event listener to redirect to vacation request creation page
+        document.getElementById("create-vacation-request").addEventListener("click", () => {
+            window.location.href = "/public/employee_create_vacation_request.html"; // Redirect to create request page
+        });
+    </script>
 </body>
 </html>
