@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Vacation Request</title>
+    <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
+    <script defer src="/scripts/auth.js" role="employee"></script>
+    <script defer src="/scripts/navbar.js"></script>
+</head>
+<body>
+    <div id="navbar-container"></div> 
+    <h1>Create Vacation Request</h1>
+
+    <!-- Form to create a new vacation request -->
+    <form id="vacation-request-form">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" required><br>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" required><br>
+
+        <label for="reason">Reason:</label>
+        <textarea id="reason" required></textarea><br>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+    <script type="module">
+        import { apiRequest } from "/scripts/api.js";
+
+        document.getElementById("vacation-request-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const start_date = document.getElementById("start_date").value;
+            const end_date = document.getElementById("end_date").value;
+            const reason = document.getElementById("reason").value;
+
+            const response = await apiRequest("/vacation_requests", "POST", {
+                start_date, end_date, reason
+            });
+
+            if (response.error) {
+                alert("Error creating vacation request: " + response.error);
+            } else {
+                alert("Vacation request created successfully!");
+                window.location.href = "/public/employee.html"; // Redirect to employee dashboard
+            }
+        });
+    </script>
+</body>
+</html>
