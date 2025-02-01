@@ -15,7 +15,7 @@ fetch('/public/navbar.html')
         if (userRole === "manager") {
             roleLinksContainer.innerHTML = `
                 <a href="/public/manager.html">Manage Users</a>
-                <a href="/public/user_form.html">Create User</a>
+                <a href="/public/vacation_requests.html">Vacation Requests</a> <!-- Correct path now -->
             `;
         } else if (userRole === "employee") {
             roleLinksContainer.innerHTML = `

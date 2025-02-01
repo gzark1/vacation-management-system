@@ -81,14 +81,9 @@ class App:
         response, status_code = UserService.get_user_by_id(user_id)
         return Response(json.dumps(response), status=status_code, mimetype="application/json")
 
-    @AuthMiddleware.require_auth()
-    def get_vacation_requests(self, request, user):
-        """Retrieve vacation requests. Managers see all, employees see their own."""
-        response, status_code = VacationRequestService.get_vacation_requests(user)
-        return Response(json.dumps(response), status=status_code, mimetype="application/json")
-    @AuthMiddleware.require_auth("employee")  # Ensure the user is authenticated as an employee
+    @AuthMiddleware.require_auth("employee")
     def create_vacation_request(self, request, user):
-        """Create a new vacation request."""
+        """Create a new vacation request (Employee only)."""
         data = request.get_json()
         
         # Extract necessary fields from the request body
@@ -105,9 +100,9 @@ class App:
         
         return self.create_response(response, status_code)
 
-    @AuthMiddleware.require_auth("manager")  # Only managers should be able to review vacation requests
+    @AuthMiddleware.require_auth("manager")
     def review_vacation_request(self, request, user, request_id):
-        """Approve or reject a vacation request."""
+        """Approve or reject a vacation request (Manager only)."""
         data = request.get_json()
         
         # Extract the status (approved/rejected) from the request body
@@ -121,6 +116,30 @@ class App:
         response, status_code = VacationRequestService.review_vacation_request(request_id, user["user_id"], status)
         
         return self.create_response(response, status_code)
+
+    @AuthMiddleware.require_auth("employee")
+    def delete_vacation_request(self, request, user, request_id):
+        """Delete a vacation request (Employee only)."""
+        
+        # Call the service to delete the vacation request
+        from api.vacation_requests import VacationRequestService
+        response, status_code = VacationRequestService.delete_vacation_request(request_id, user["user_id"])
+        
+        return self.create_response(response, status_code)
+
+    @AuthMiddleware.require_auth("manager")
+    def get_vacation_requests(self, request, user):
+        """Get all vacation requests for all employees (Manager only)."""
+        from api.vacation_requests import VacationRequestService
+        response, status_code = VacationRequestService.get_vacation_requests(user)
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
+
+    @AuthMiddleware.require_auth("employee")
+    def get_vacation_requests_me(self, request, user):
+        """Get vacation requests for the logged-in employee (Employee only)."""
+        from api.vacation_requests import VacationRequestService
+        response, status_code = VacationRequestService.get_vacation_requests_me(user)
+        return Response(json.dumps(response), status=status_code, mimetype="application/json")
 
     def options(self, request):
         """Handles CORS preflight requests for all endpoints."""

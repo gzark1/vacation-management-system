@@ -11,7 +11,8 @@ url_map = Map([
     Rule('/users/<int:user_id>', methods=['DELETE'], endpoint='delete_user'),  # ✅ Delete user
     Rule('/users/<int:user_id>', methods=['GET'], endpoint='get_user_by_id'),  # ✅ Get user
     ## Vacation requests
-    Rule('/vacation_requests', methods=['GET'], endpoint='get_vacation_requests'), # ✅ Get requests, manager sees all, employee sees their own
+    Rule('/vacation_requests', methods=['GET'], endpoint='get_vacation_requests'), # ✅ Get requests, manager sees all
+    Rule('/vacation_requests/me', methods=['GET'], endpoint='get_vacation_requests_me'),  # ✅ Employee sees only their requests
     Rule('/vacation_requests', methods=['POST'], endpoint='create_vacation_request'),
     Rule('/vacation_requests/<int:request_id>/review', methods=['POST'], endpoint='review_vacation_request'),
     Rule('/vacation_requests/<int:request_id>', methods=['DELETE'], endpoint='delete_vacation_request'),  # ✅ Delete request
