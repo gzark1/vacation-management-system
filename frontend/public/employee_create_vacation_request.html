@@ -7,24 +7,31 @@
     <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
     <script defer src="/scripts/auth.js" role="employee"></script>
     <script defer src="/scripts/navbar.js"></script>
+    <link rel="stylesheet" href="/styles/styles.css"> <!-- Link to the shared CSS file -->
 </head>
 <body>
     <div id="navbar-container"></div> 
-    <h1>Create Vacation Request</h1>
-
-    <!-- Form to create a new vacation request -->
-    <form id="vacation-request-form">
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" required><br>
-
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" required><br>
-
-        <label for="reason">Reason:</label>
-        <textarea id="reason" required></textarea><br>
-
-        <button type="submit">Submit Request</button>
-    </form>
+    <!-- Center the form in the viewport -->
+    <div class="form-container">
+        <div class="form-card">
+            <h3>Create Vacation Request</h3>
+            <form id="vacation-request-form">
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" id="start_date" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" id="end_date" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <textarea id="reason" required class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Request</button>
+            </form>
+        </div>
+    </div>
 
     <script type="module">
         import { apiRequest } from "/scripts/api.js";
@@ -48,5 +55,6 @@
             }
         });
     </script>
+
 </body>
 </html>

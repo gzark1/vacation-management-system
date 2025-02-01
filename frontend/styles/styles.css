@@ -1,0 +1,337 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+}
+
+/* Container for the Form (Center the form in the viewport) */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f7f7f7; /* Background color */
+}
+
+/* Card Style for Forms */
+.form-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Limiting the width of the form */
+}
+
+/* Heading Style */
+.form-card h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.form-card .form-group {
+    margin-bottom: 20px;
+}
+
+.form-card .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-card .form-group input,
+.form-card .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.form-card .form-group input:focus,
+.form-card .form-group textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Button Styling */
+.form-card .btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-card .btn:hover {
+    background-color: #45a049;
+}
+
+/* Error Message Styling */
+.form-card .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .form-card {
+        padding: 15px;
+    }
+
+    .form-card h3 {
+        font-size: 22px;
+    }
+
+    .form-card .form-group input,
+    .form-card .form-group textarea {
+        font-size: 14px;
+    }
+
+    .form-card .btn {
+        font-size: 14px;
+    }
+}
+
+/* Style for Select elements */
+.form-card select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.form-card select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Optional: Styling for the dropdown options */
+.form-card select option {
+    padding: 10px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Navbar links container */
+.navbar .navbar-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+
+/* General styling for Home, Role Links, and Logout */
+.navbar .navbar-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;  /* Bigger font size */
+    padding: 12px 20px;
+    margin-right: 15px; /* Space between links */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Style for hover and active states */
+.navbar .navbar-link:hover,
+.navbar .navbar-link:focus {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Active state for current page link */
+.navbar .navbar-link.active {
+    background-color: #45a049;
+    color: white;
+    font-weight: bold;
+}
+
+/* Styling for the logout button (same as navbar links) */
+.navbar .navbar-btn {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 18px;  /* Slightly larger font for better visibility */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20px; /* More gap from the right side */
+}
+
+/* Hover effect for the logout button */
+.navbar .navbar-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Mobile responsiveness - Stack the navbar items on mobile */
+@media (max-width: 768px) {
+    .navbar .navbar-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .navbar-link {
+        padding: 15px;
+        font-size: 18px;
+        width: 100%;
+    }
+
+    .navbar .navbar-btn {
+        width: 100%;
+        font-size: 18px;
+    }
+}
+
+/* General Styles for Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header */
+thead {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Hover effect for table rows */
+tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Select elements styling */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Select element on focus */
+select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Adjusting select responsiveness - keep select in line with its container */
+form select, table select {
+    width: 100%; /* Ensures select doesn't expand the container */
+    box-sizing: border-box; /* Prevents overflow */
+}
+
+/* Responsive Table - Stack columns on small screens */
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px; /* Reduce padding for mobile */
+    }
+    
+    /* Make the table scrollable horizontally on small screens */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Styling the buttons for tables (e.g. actions) */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Margin and Spacing for the tables on each page */
+table + table {
+    margin-top: 30px;
+}
+
+/* Styling for <h1> headers */
+h1 {
+    text-align: center; /* Center the header */
+    font-size: 2.2rem; /* Larger font size */
+    font-weight: bold; /* Make it bold */
+    color: #333; /* Dark text color */
+    margin-top: 30px; /* Space from the top */
+    margin-bottom: 20px; /* Space below the header */
+    font-family: 'Roboto', sans-serif; /* Elegant and modern font */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Slightly smaller font size for mobile */
+    }
+}
+
+
+
+
