@@ -33,24 +33,30 @@ class VacationRequestService:
         except Exception as e:
             return {"error": str(e)}, 400
 
-
     @staticmethod
-    def create_vacation_request(data, user_id):
-        """ Creates a new vacation request. """
+    def create_vacation_request(employee_id, start_date, end_date, reason):
+        """Create a new vacation request."""
         conn = connect_db()
         cursor = conn.cursor()
 
         try:
+            # Insert the new vacation request with status 'pending' and reviewed_by 'NULL'
             cursor.execute(
-                "INSERT INTO vacation_requests (user_id, start_date, end_date, status) VALUES (%s, %s, %s, %s) RETURNING id;",
-                (user_id, data["start_date"], data["end_date"], "pending")
+                "INSERT INTO vacation_requests (employee_id, start_date, end_date, reason, status, reviewed_by) "
+                "VALUES (%s, %s, %s, %s, 'pending', NULL) RETURNING id;",
+                (employee_id, start_date, end_date, reason)
             )
+            # Commit the transaction and fetch the new request ID
+            vacation_request_id = cursor.fetchone()[0]
             conn.commit()
-            request_id = cursor.fetchone()[0]
-            return {"message": "Vacation request created", "request_id": request_id}, 201
+            
+            # Return success response
+            return {"message": "Vacation request created successfully", "id": vacation_request_id}, 201
+
         except Exception as e:
-            conn.rollback()
+            conn.rollback()  # Ensure the transaction is rolled back on error
             return {"error": str(e)}, 400
+
 
     @staticmethod
     def get_vacation_request_by_id(request_id):

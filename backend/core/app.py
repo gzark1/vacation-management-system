@@ -86,6 +86,24 @@ class App:
         """Retrieve vacation requests. Managers see all, employees see their own."""
         response, status_code = VacationRequestService.get_vacation_requests(user)
         return Response(json.dumps(response), status=status_code, mimetype="application/json")
+    @AuthMiddleware.require_auth("employee")  # Ensure the user is authenticated as an employee
+    def create_vacation_request(self, request, user):
+        """Create a new vacation request."""
+        data = request.get_json()
+        
+        # Extract necessary fields from the request body
+        start_date = data.get("start_date")
+        end_date = data.get("end_date")
+        reason = data.get("reason")
+        
+        if not start_date or not end_date or not reason:
+            return self.create_response({"error": "start_date, end_date, and reason are required."}, 400)
+        
+        # Create the vacation request by calling the service
+        from api.vacation_requests import VacationRequestService
+        response, status_code = VacationRequestService.create_vacation_request(user["user_id"], start_date, end_date, reason)
+        
+        return self.create_response(response, status_code)
 
     def options(self, request):
         """Handles CORS preflight requests for all endpoints."""

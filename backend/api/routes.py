@@ -13,7 +13,7 @@ url_map = Map([
     ## Vacation requests
     Rule('/vacation_requests', methods=['GET'], endpoint='get_vacation_requests'), # ✅ Get requests, manager sees all, employee sees their own
     Rule('/vacation_requests', methods=['POST'], endpoint='create_vacation_request'),
-    Rule('/vacation_requests/<int:request_id>/approve', methods=['POST'], endpoint='approve_vacation_request'),
+    Rule('/vacation_requests/<int:request_id>/approve', methods=['POST'], endpoint='review_vacation_request'),
     Rule('/vacation_requests/<int:request_id>', methods=['DELETE'], endpoint='delete_vacation_request'),  # ✅ Delete request
     #Rule('/me', methods=['GET'], endpoint='get_me'),  # ✅ Get logged-in user
 ])
