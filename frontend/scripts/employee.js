@@ -1,5 +1,6 @@
 import { apiRequest } from "/scripts/api.js";
 
+// Function to load vacation requests for the logged-in employee
 async function loadVacationRequests() {
     const requests = await apiRequest("/vacation_requests/me");
 
@@ -32,6 +33,7 @@ async function loadVacationRequests() {
     });
 }
 
+// Function to delete a vacation request
 async function deleteRequest(request_id) {
     const response = await apiRequest(`/vacation_requests/${request_id}`, "DELETE");
 
@@ -43,4 +45,5 @@ async function deleteRequest(request_id) {
     }
 }
 
+// Load vacation requests when page loads
 loadVacationRequests();

@@ -1,11 +1,15 @@
 import { apiRequest } from "/scripts/api.js";
 
+// Function to load and display all vacation requests (Manager only)
 async function loadVacationRequests() {
+    // Fetch vacation requests from the API
     const requests = await apiRequest("/vacation_requests");
 
+    // Select the table body and clear previous data
     const tableBody = document.getElementById("vacation-requests-table");
-    tableBody.innerHTML = ""; // Clear table before repopulating
+    tableBody.innerHTML = ""; // Reset table before repopulating
 
+    // Loop through each request and create a row in the table
     requests.forEach(request => {
         const row = document.createElement("tr");
 
@@ -28,7 +32,7 @@ async function loadVacationRequests() {
         tableBody.appendChild(row);
     });
 
-    // Handle approve/reject actions
+    // Attach event listeners to approve buttons
     document.querySelectorAll('.approve-btn').forEach(btn => {
         btn.addEventListener("click", async () => {
             const request_id = btn.dataset.requestId;
@@ -36,6 +40,7 @@ async function loadVacationRequests() {
         });
     });
 
+    // Attach event listeners to reject buttons
     document.querySelectorAll('.reject-btn').forEach(btn => {
         btn.addEventListener("click", async () => {
             const request_id = btn.dataset.requestId;
@@ -44,15 +49,18 @@ async function loadVacationRequests() {
     });
 }
 
+// Function to approve or reject a vacation request
 async function reviewRequest(request_id, status) {
+    // Send API request to update the vacation request status
     const response = await apiRequest(`/vacation_requests/${request_id}/review`, "POST", { status });
 
     if (response.error) {
         alert("Error updating request: " + response.error);
     } else {
         alert(`Vacation request ${status} successfully!`);
-        loadVacationRequests();  // Refresh the list
+        loadVacationRequests();  // Refresh the request list
     }
 }
 
+// Load vacation requests when the page loads
 loadVacationRequests();

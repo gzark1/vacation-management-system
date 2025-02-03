@@ -19,7 +19,7 @@ document.getElementById("login-form")?.addEventListener("submit", async function
         const result = await response.json();
         localStorage.setItem("token", result.token); // Store JWT in localStorage
 
-        redirectUser(result.role);
+        redirectUser(result.role); // Redirect user based on their role
     } catch (error) {
         alert(error.message);
     }
@@ -55,8 +55,9 @@ function checkAuth(requiredRole = null) {
         const userRole = payload.role;
         console.log(`🔍 Auth Check: User Role: ${userRole}, Required Role: ${requiredRole}`);
 
+        // Redirect if the user does not have the required role
         if (requiredRole && userRole !== requiredRole) {
-            console.warn(`❌ Unauthorized access. Expected role: ${requiredRole}, but got: ${userRole}`);
+            console.warn(`❌ Unauthorized access. Redirecting...`);
             window.location.href = `/public/error.html?msg=unauthorized&role=${userRole}&required=${requiredRole}`;
             return;
         }
@@ -65,22 +66,18 @@ function checkAuth(requiredRole = null) {
         localStorage.removeItem("token");
         window.location.href = "/public/error.html?msg=invalid_token";
     }
-
 }
 
-// if no index.html, check authentication
+// If the user is not on index.html, check authentication
 if (!window.location.pathname.endsWith("index.html")) {
-    // Get the script element
     const scriptTag = document.querySelector('script[src="/scripts/auth.js"]');
-
-    // Access the data attribute
     const role = scriptTag.getAttribute('role');
     checkAuth(role);
 }
 
 // Function to log out the user
 function logout() {
-    localStorage.removeItem("token"); // Remove token from storage
+    localStorage.removeItem("token"); // Remove JWT token
     window.location.href = "/public/index.html"; // Redirect to login
 }
 

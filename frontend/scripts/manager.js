@@ -1,5 +1,6 @@
 import { apiRequest } from "./api.js";
 
+// Function to load all users (Manager only)
 async function loadUsers() {
     const users = await apiRequest("/users");
     
@@ -22,6 +23,7 @@ async function loadUsers() {
     });
 }
 
+// Function to delete a user
 async function deleteUser(userId) {
     if (!confirm("Are you sure you want to delete this user?")) return;
 
@@ -35,6 +37,7 @@ async function deleteUser(userId) {
     }
 }
 
+// Attach delete event listener to buttons
 document.getElementById("users-table").addEventListener("click", function (event) {
     if (event.target.classList.contains("delete-btn")) {
         const userId = event.target.dataset.userId;
@@ -47,6 +50,7 @@ document.getElementById("users-table").addEventListener("click", function (event
     }
 });
 
+// Attach event listener to create user button
 document.getElementById("create-user").addEventListener("click", () => {
     window.location.href = "/public/user_form.html"; // Redirect to the user form for creating a new user
 });
