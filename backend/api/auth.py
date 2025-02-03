@@ -9,22 +9,23 @@ from dotenv import load_dotenv
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")
 
+
 class AuthService:
-    """ Handles user authentication (login, password hashing, JWT). """
+    """Handles user authentication (login, password hashing, JWT)."""
 
     @staticmethod
     def hash_password(password):
-        """ Hashes a password using bcrypt. """
+        """Hashes a password using bcrypt."""
         return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     @staticmethod
     def verify_password(password, hashed_password):
-        """ Verifies a password against a stored hash. """
+        """Verifies a password against a stored hash."""
         return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
 
     @staticmethod
     def generate_jwt(user_id, role):
-        """ Generates a JWT token for authentication. """
+        """Generates a JWT token for authentication."""
         payload = {
             "user_id": user_id,
             "role": role,
@@ -34,7 +35,7 @@ class AuthService:
 
     @staticmethod
     def login(email, password):
-        """ Authenticates a user and returns a JWT token if successful. """
+        """Authenticates a user and returns a JWT token if successful."""
         conn = connect_db()
         cursor = conn.cursor()
 

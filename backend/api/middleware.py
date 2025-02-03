@@ -8,12 +8,13 @@ import json
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")
 
+
 class AuthMiddleware:
-    """ Middleware to validate JWT tokens globally. """
+    """Middleware to validate JWT tokens globally."""
 
     @staticmethod
     def require_auth(required_role=None):
-        """ Decorator to require authentication for a route. """
+        """Decorator to require authentication for a route."""
         def decorator(func):
             @wraps(func)
             def wrapper(instance, request, *args, **kwargs):
