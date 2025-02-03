@@ -1,5 +1,6 @@
 from database.connection import connect_db
 from api.auth import AuthService
+import re  # Import regex module
 
 class UserService:
     """Handles user-related operations (business logic)."""
@@ -7,8 +8,11 @@ class UserService:
     @staticmethod
     def create_user(data, created_by):
         """Creates a new user (Manager only)."""
-        print("We got the data for new user in database")
-        print(data)
+        
+        # Validate employee_code - must be exactly 7 digits
+        if not re.fullmatch(r"\d{7}", str(data.get("employee_code", ""))):
+            return {"error": "Employee code must be exactly 7 digits."}, 400
+
         conn = connect_db()
         cursor = conn.cursor()
 

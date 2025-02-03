@@ -10,7 +10,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,  -- Unique identifier for each user
     name VARCHAR(100) NOT NULL,  -- Full name of the user
     email VARCHAR(100) UNIQUE NOT NULL,  -- Unique email address for login
-    employee_code CHAR(7) UNIQUE NOT NULL,  -- Unique employee identifier
+    employee_code CHAR(7) UNIQUE NOT NULL CHECK (employee_code ~ '^[0-9]{7}$'),  -- Employee code must be exactly 7 digits (Numeric)
     password_hash TEXT NOT NULL,  -- Hashed password (bcrypt recommended for security)
     role VARCHAR(10) CHECK (role IN ('manager', 'employee')) NOT NULL,  -- Defines role-based access (Manager or Employee)
     created_by INT REFERENCES users(id) ON DELETE SET NULL,  -- Tracks who created this user (Nullable if creator is removed)

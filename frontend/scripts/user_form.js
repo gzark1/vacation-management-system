@@ -33,6 +33,10 @@ document.getElementById('submit-button').addEventListener('click', async (event)
     if (!userId) {
         // If creating a new user, gather additional required fields
         userData.employee_code = document.getElementById("employee_code").value;
+        if (!/^\d{7}$/.test(userData.employee_code)) {
+            alert("Employee code must be exactly 7 digits.");
+            return;
+        }
         userData.password = document.getElementById("password").value;
         userData.role = document.getElementById("role").value;
     
