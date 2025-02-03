@@ -50,13 +50,12 @@ A full-stack vacation management system where **managers** can manage users and 
 
 ### 1. Clone the repository:
 ```
-git clone <repository_url>
-cd <project_directory>
+git clone https://github.com/gzark1/vacation-management-system.git
+cd vacation-management-system
 ```
 
 2. Create .env files:
-Make sure you have the following .env file in the backend directory:
-
+Make sure you have the following .env file in the backend directory (backend/.env):
 
 ```
 DB_NAME=vacation_portal
