@@ -17,8 +17,9 @@ fetch('/public/navbar.html')
             // Display links based on the user's role
             if (userRole === "manager") {
                 roleLinksContainer.innerHTML = `
-                    <a href="/public/manager.html">Manage Users</a>
-                    <a href="/public/vacation_requests.html">Vacation Requests</a>
+                    <a href="/public/manager.html" class="navbar-link">Manage Users</a>
+                    <a href="/public/vacation_requests.html" class="navbar-link">Vacation Requests</a>
+                    <a href="#" class="navbar-link under-construction-link">Audit Logs</a>
                 `;
             } else if (userRole === "employee") {
                 roleLinksContainer.innerHTML = `
@@ -35,5 +36,29 @@ fetch('/public/navbar.html')
         document.getElementById("logout-button").addEventListener("click", function () {
             localStorage.removeItem("token");  // Remove token from local storage
             window.location.href = "/public/index.html";  // Redirect to login page
+        });
+
+        // Handle "Under Construction" links
+        const underConstructionLinks = document.querySelectorAll('.under-construction-link');
+        const modal = document.getElementById("construction-modal");
+        const closeBtn = document.querySelector(".close");
+
+        underConstructionLinks.forEach(link => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();  // Prevent navigation
+                modal.style.display = "block"; // Show the modal
+            });
+        });
+
+        // Close modal when clicking the "X" button
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
         });
     });

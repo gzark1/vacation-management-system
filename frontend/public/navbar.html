@@ -1,7 +1,25 @@
+<head>
+    <link rel="stylesheet" href="/styles/logout.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+</head>
 <nav class="navbar">
     <div class="navbar-links">
-        <a href="/public/index.html" class="navbar-link">Home</a>
-        <span id="role-specific-links" class="navbar-link"></span> <!-- Role-specific links injected here -->
-        <button id="logout-button" class="navbar-link navbar-btn">Logout</button> <!-- Logout styled as a link -->
+        <!-- <a href="/public/index.html" class="navbar-link">Home</a> -->
+        <span id="role-specific-links"></span> <!-- Role-specific links injected here -->
+        <!-- Under Construction Tabs (Clickable but trigger modal) -->
+        <a href="#" class="navbar-link under-construction-link">My profile</a>    
+        <button id ="logout-button" class="logout-btn">
+            <div class="icon"></div>
+            <div class="text">Logout</div>
+        </button>    
     </div>
 </nav>
+
+<!-- Modal Popup -->
+<div id="construction-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>🚧 Under Construction 🚧</h2>
+        <p>This feature is currently being developed. Stay tuned for updates!</p>
+    </div>
+</div>

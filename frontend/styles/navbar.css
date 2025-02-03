@@ -1,0 +1,126 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Navbar links container */
+.navbar .navbar-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* General styling for Home, Role Links, and Logout */
+.navbar .navbar-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;/* slight bold */ 
+    font-size: 20px;  /* Bigger font size */
+    font-family: 'Roboto', sans-serif; /* Elegant and modern font */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 12px 20px;
+    margin-right: 15px; /* Space between links */
+    border-radius: 0px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Style for hover and active states */
+.navbar .navbar-link:hover,
+.navbar .navbar-link:focus {
+    background-color: #527253;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px); /* Subtle lift effect */
+}
+
+/* Active state for current page link */
+.navbar .navbar-link.active {
+    background-color: #45a049;
+    color: white;
+    font-weight: bold;
+}
+
+/* Styling for the logout button (same as navbar links) */
+.navbar .navbar-btn {
+    background-color: #e98785;
+    color: rgb(238, 147, 147);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 18px;  /* Slightly larger font for better visibility */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 20px; /* More gap from the right side */
+}
+
+/* Hover effect for the logout button */
+.navbar .navbar-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Mobile responsiveness - Stack the navbar items on mobile */
+@media (max-width: 768px) {
+    .navbar .navbar-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .navbar-link {
+        padding: 15px;
+        font-size: 18px;
+        width: 100%;
+    }
+
+    .navbar .navbar-btn {
+        width: 100%;
+        font-size: 18px;
+    }
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Disable clicks on "Under Construction" links */
+.under-construction-link {
+    color: gray;
+    cursor: not-allowed;
+}
