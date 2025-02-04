@@ -23,7 +23,7 @@ fetch('/public/navbar.html')
                 `;
             } else if (userRole === "employee") {
                 roleLinksContainer.innerHTML = `
-                    <a href="/public/employee.html">My Vacation Requests</a>
+                    <a href="/public/employee.html" class="navbar-link">My Vacation Requests</a>
                 `;
             }
         } catch (error) {
@@ -59,6 +59,15 @@ fetch('/public/navbar.html')
         window.addEventListener("click", (event) => {
             if (event.target === modal) {
                 modal.style.display = "none";
+            }
+        });
+
+        // 🎯 Set Active Class for Current Page
+        const currentPath = window.location.pathname; // Get current page path
+        console.log(currentPath);
+        document.querySelectorAll(".navbar-link").forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("active"); // Add active class to the matching link
             }
         });
     });

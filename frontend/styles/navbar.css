@@ -1,10 +1,11 @@
 /* Navbar Styles */
 .navbar {
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: #f9f9f9; /* Lighter background for a softer look */
+    border-radius: 0px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 30px;
-    display: flex;
+    padding: 5px 30px;
+    display: flex;  
+    height: 60px; /* Ensures full height coverage */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -27,9 +28,10 @@
     font-size: 20px;  /* Bigger font size */
     font-family: 'Roboto', sans-serif; /* Elegant and modern font */
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    padding: 12px 20px;
+    padding: 18px 20px; /* Increased padding for full height */
     margin-right: 15px; /* Space between links */
     border-radius: 0px;
+    height: 100%; /* Makes sure the navbar links stretch to full navbar height */
     transition: all 0.3s ease;
     text-align: center;
 }
@@ -37,17 +39,16 @@
 /* Style for hover and active states */
 .navbar .navbar-link:hover,
 .navbar .navbar-link:focus {
-    background-color: #527253;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateY(-4px); /* Subtle lift effect */
+    background-color: rgba(0, 0, 0, 0.05); /* Light hover effect */
+    color: black;
 }
 
 /* Active state for current page link */
 .navbar .navbar-link.active {
-    background-color: #45a049;
-    color: white;
+    background-color: rgba(0, 150, 136, 0.2); /* Softer green shade */
+    color: #00796B; /* Darker green text */
     font-weight: bold;
+    border-bottom: 3px solid #00796B; /* Small underline effect */
 }
 
 /* Styling for the logout button (same as navbar links) */
@@ -70,20 +71,22 @@
 
 /* Mobile responsiveness - Stack the navbar items on mobile */
 @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
     .navbar .navbar-links {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
     }
 
     .navbar .navbar-link {
-        padding: 15px;
-        font-size: 18px;
         width: 100%;
-    }
-
-    .navbar .navbar-btn {
-        width: 100%;
-        font-size: 18px;
+        text-align: left;
+        padding: 12px;
     }
 }
 
