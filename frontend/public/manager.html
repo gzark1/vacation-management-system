@@ -10,19 +10,25 @@
     <link rel="stylesheet" href="/styles/styles.css"> <!-- Link to the CSS file -->
 </head>
 <body>
-    <div id="navbar-container"></div> 
-    <h1>Users List</h1>
-    <button id="create-user">Create User</button> <!-- We will implement later -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="users-table"></tbody>
-    </table>
+    <div id="navbar-container"></div> <!-- Navbar injected here -->
+
+    <div class="table-container"> <!-- Centered table wrapper -->
+        <div class="button-container">
+            <button id="create-user">Create User</button> <!-- Now inside the container -->
+        </div>
+
+        <h1>Users List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="users-table"></tbody> <!-- Table content loaded dynamically -->
+        </table>
+    </div>
 
     <script type="module" src="/scripts/manager.js"></script>
 </body>

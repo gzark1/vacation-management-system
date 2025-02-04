@@ -136,6 +136,16 @@ body {
     color: #333;
 }
 
+/* Wrapper to center tables */
+.table-container {
+    width: 90%; /* Ensures the table is not too wide */
+    max-width: 1100px; /* Prevents the table from stretching too much */
+    margin: 0 auto; /* Centers the table horizontally */
+    padding: 20px;
+    background-color: #fff; /* Adds a background for contrast */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
 
 /* General Styles for Tables */
 table {
@@ -145,17 +155,21 @@ table {
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* overflow: hidden; Ensures the border-radius is applied */
+
 }
 
 /* Table header */
 thead {
-    background-color: #f4f4f4;
+    background-color: #e0e0e0; /* Slightly darker background */
     color: #333;
+    font-weight: bold;
 }
 
 th, td {
     padding: 12px;
-    text-align: left;
+    text-align: center; /* Centers text horizontally */
+    vertical-align: middle; /* Centers text vertically */
     border: 1px solid #ddd;
 }
 
@@ -163,6 +177,29 @@ th, td {
 tbody tr:hover {
     background-color: #f1f1f1;
     cursor: pointer;
+}
+
+/* Button inside table container */
+.table-container .button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+}
+
+/* Button Styling */
+.table-container .button-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.table-container .button-container button:hover {
+    background-color: #45a049;
 }
 
 /* Select elements styling */

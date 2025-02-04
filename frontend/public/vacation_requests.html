@@ -13,23 +13,24 @@
     <div id="navbar-container"></div> 
     <h1>Vacation Requests</h1>
 
+    <div class="table-container"> <!-- Centered table wrapper -->
     <!-- Table to display vacation requests for the manager -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Employee Name</th>
-                <th>Employee Code</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Reviewed By</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="vacation-requests-table"></tbody>
-    </table>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Employee Code</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Reviewed By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="vacation-requests-table"></tbody>
+        </table>
+    </div>
     <script type="module" src="/scripts/vacation_requests.js"></script>
 </body>
 </html>

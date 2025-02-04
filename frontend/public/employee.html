@@ -10,25 +10,26 @@
 </head>
 <body>
     <div id="navbar-container"></div> 
-    <h1>My Vacation Requests</h1>
-
-    <!-- Add a button to create a new vacation request -->
-    <button id="create-vacation-request">Create Vacation Request</button>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Reviewed By</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="vacation-requests-table"></tbody>
-    </table>
-
+    <div class="table-container"> <!-- Centered table wrapper -->
+        <div class="button-container">
+            <!-- Add a button to create a new vacation request -->
+            <button id="create-vacation-request">Create Vacation Request</button>
+        </div>
+        <h1>My Vacation Requests</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Reviewed By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="vacation-requests-table"></tbody>
+        </table>
+    </div>
     <script type="module" src="/scripts/employee.js"></script>
     <script type="module">
         // Add event listener to redirect to vacation request creation page
